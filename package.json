@@ -1,0 +1,24 @@
+{
+  "name": "js_backend_project",
+  "version": "1.0.0",
+  "description": "back-end (project)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csngmusic/js_backend_project.git"
+  },
+  "author": "Gregory Kuzin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csngmusic/js_backend_project/issues"
+  },
+  "homepage": "https://github.com/csngmusic/js_backend_project#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "^6.5.0"
+  }
+}
