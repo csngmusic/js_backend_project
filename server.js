@@ -11,35 +11,36 @@ async function getDbCollection(dbAddress, dbName, dbCollectionName) {
     await client.connect();
     const db = client.db(dbName);
     const collection = db.collection(dbCollectionName);
+    return db.collection(dbCollectionName);
 }
-app.get('/tasks', async function(req, res) {
-    const collection = getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
+app.get('/playlist', async function(req, res) {
+    const collection = await getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
     const data = await collection.find({}).toArray();
     res.send(data);
 });
 
-app.get('/tasks/:id', async function(req, res) {
-    const collection = getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
+app.get('/playlist/:id', async function(req, res) {
+    const collection = await getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
     const data = await collection.findOne({_id: new ObjectId(req.params.id)});
     res.send(data);
 });
 
-app.post('/tasks', async function(req, res) {
-    const task = {...req.body, done: false};    
-    const collection = getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
-    await collection.insertOne(task);
-    res.send(task);
+app.post('/playlist', async function(req, res) {
+    const track = {...req.body, favorite: false};    
+    const collection = await getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
+    await collection.insertOne(track);
+    res.send(track);
 });
 
-app.patch('/tasks/:id', async function(req, res) {
-    const collection = getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
+app.patch('/playlist/:id', async function(req, res) {
+    const collection = await getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
     await collection.updateOne({_id: new ObjectId(req.params.id)}, 
                                 {'$set': req.body});
     res.send({});
 });
 
-app.delete('/tasks/:id', async function(req, res) {
-    const collection = getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
+app.delete('/playlist/:id', async function(req, res) {
+    const collection = await getDbCollection('mongodb://127.0.0.1', 'music_library', 'playlist');
     await collection.deleteOne({_id: new ObjectId(req.params.id)});
     res.send({});
 });
